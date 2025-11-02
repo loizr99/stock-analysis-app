@@ -17,7 +17,7 @@ export default function App() {
         
         try {
             setError("");
-            fetch("http://localhost:5000/api/stock/" + symbol)
+            fetch("https://stock-analysis-app-e177.onrender.com/api/v8/finance/chart/" + symbol + "?inverval=1d")
                 .then(res => res.json())
                 .then(setData);
         } catch (err: any) {
