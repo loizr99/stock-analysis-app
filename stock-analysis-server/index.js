@@ -3,26 +3,25 @@ import fetch from "node-fetch";
 import cors from "cors";
 
 const app = express();
-const PORT = 5000;
 
-app.use(cors({
-    origin: "http://localhost:3000"
-}));
+const PORT = process.env.PORT || 5000;
 
-app.get("/api/stock/:symbol", async (req, res) => {
+app.use(cors());
+
+app.get("/api/*", async (req, res) => {
     const { symbol } = req.params;
 
-    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d&range=1mo`;
+    const url = `https://query1.finance.yahoo.com/${req.params[0]}${req.url.includes("?") ? req.url.slice(req.url.indexOf("?")) : ""}`;
 
     try {
         const response = await fetch(url);
-        const data = await response.json();
-        res.status(response.status).json(data);
+        const data = await response.text();
+        res.status(response.status).send(data);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
 
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`)
+    console.log(`Server running on port ${PORT}`)
 });
