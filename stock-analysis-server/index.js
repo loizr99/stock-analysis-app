@@ -8,10 +8,10 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 
-app.get("/api/*", async (req, res) => {
-    const { symbol } = req.params;
-
-    const url = `https://query1.finance.yahoo.com/${req.params[0]}${req.url.includes("?") ? req.url.slice(req.url.indexOf("?")) : ""}`;
+app.get("/api/*path", async (req, res) => {
+    const path = req.params.path || "";
+    const query = req.url.includes("?") ? req.url.slice(req.url.indexOf("?")) : ""
+    const url = `https://query1.finance.yahoo.com/${path}${query}`;
 
     try {
         const response = await fetch(url);
