@@ -38,7 +38,7 @@ export default function App() {
 
             {error && <p style={{ color: "red" }}>{error}</p>}
 
-            {data && <pre>{JSON.stringify(data)};</pre>}
+            {data && <p style={{ fontFamily: "monospace" }}>{JSON.stringify(data)};</p>}
         </div>
     );
 }
